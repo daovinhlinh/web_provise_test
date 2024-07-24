@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:web_provise_test/src/views/home/view/home_view.dart';
+import 'package:web_provise_test/src/views/home/home_view.dart';
 
 void main() {
   runApp(const MainApp());

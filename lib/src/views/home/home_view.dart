@@ -1,19 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:web_provise_test/src/apis/recipe_api.dart';
 import 'package:web_provise_test/src/models/recipe.dart';
 import 'package:web_provise_test/src/views/home/widgets/custom_app_bar.dart';
 import 'package:web_provise_test/src/views/home/widgets/recipe_card.dart';
 import 'package:web_provise_test/src/views/home/widgets/recipe_detail.dart';
-import 'package:shimmer/shimmer.dart';
-
-Future<T> loadJson<T>(String uri) async {
-//Load json
-  String jsonString = await rootBundle.loadString(uri);
-  // decode json
-  return jsonDecode(jsonString);
-}
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -23,6 +14,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final RecipeApi _recipeApi = RecipeApi();
   List<Recipe> recipes = [];
   bool isLoading = true;
 
@@ -39,16 +31,17 @@ class _HomeViewState extends State<HomeView> {
       });
 
       // sleep for 1 seconds to simulate a network request
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
 
       // throw error to test error handling
       // throw Exception('An error occurred while loading the data');
 
-      List<dynamic> jsonList = await loadJson('assets/recipes.json');
-      if (jsonList.isNotEmpty) {
+      List<dynamic> data = await _recipeApi.loadRecipes();
+
+      if (data.isNotEmpty) {
         setState(() {
           isLoading = false;
-          recipes = jsonList.map((recipe) => Recipe.fromJson(recipe)).toList();
+          recipes = data.map((recipe) => Recipe.fromJson(recipe)).toList();
         });
       }
     } catch (e) {
@@ -144,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
         height: 16,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount: 5, // Adjust this number as needed
+      itemCount: 5,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
             baseColor: Colors.grey.shade300,
