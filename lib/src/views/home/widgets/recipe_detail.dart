@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:web_provise_test/assets.dart';
 import 'package:web_provise_test/src/models/recipe.dart';
+import 'package:web_provise_test/src/widgets/network_image_with_fallback.dart';
 
 class RecipeDetail extends StatelessWidget {
   final Recipe recipe;
@@ -8,39 +10,14 @@ class RecipeDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Stack(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildRecipeThumb(context),
-            Expanded(
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _buildHeader(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      _buildDiffAndTime(),
-                      _buildRecipeNutrition(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      _buildDescription(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        isLandscape
+            ? _buildLandscapeView(context)
+            : _buildPortraitView(context),
         Positioned(
           top: 20,
           left: 20,
@@ -60,6 +37,86 @@ class RecipeDetail extends StatelessWidget {
     );
   }
 
+  Row _buildLandscapeView(BuildContext context) {
+    return Row(
+      children: [
+        NetworkImageWithFallback(
+          imageUrl: recipe.image,
+          fallbackAsset: Asset.imgRecipePlaceholder,
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: double.infinity,
+          // width: double.infinity,
+        ),
+        Expanded(
+          child: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildHeader(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _buildDiffAndTime(),
+                  _buildRecipeNutrition(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildDescription(),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Column _buildPortraitView(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // _buildRecipeThumb(context),
+        NetworkImageWithFallback(
+          imageUrl: recipe.image,
+          fallbackAsset: Asset.imgRecipePlaceholder,
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: double.infinity,
+        ),
+        Expanded(
+          child: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildHeader(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildDiffAndTime(),
+                  _buildRecipeNutrition(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  _buildDescription(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Recipe Details
   Row _buildDiffAndTime() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,12 +166,12 @@ class RecipeDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          recipe.name!,
+          recipe.name ?? "",
           style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, height: 1.2),
+              fontSize: 24, fontWeight: FontWeight.bold, height: 1.2),
         ),
         Text(
-          recipe.headline!,
+          recipe.headline ?? "",
           style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
@@ -131,33 +188,11 @@ class RecipeDetail extends StatelessWidget {
           height: 4,
         ),
         Text(
-          recipe.description!,
+          recipe.description ?? "",
           style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
       ],
     );
-  }
-
-  Image _buildRecipeThumb(BuildContext context) {
-    return Image.network(recipe.image!,
-        height: MediaQuery.of(context).size.height * 0.4,
-        fit: BoxFit.cover, loadingBuilder: (context, child, loadingProgress) {
-      if (loadingProgress == null) {
-        return child;
-      }
-      return Center(
-        child: Container(
-          alignment: Alignment.center,
-          height: MediaQuery.of(context).size.height * 0.4,
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes!
-                : null,
-          ),
-        ),
-      );
-    });
   }
 
   Widget _buildRecipeNutrition() {
@@ -182,7 +217,7 @@ class RecipeDetail extends StatelessWidget {
                   "Carbos: ",
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
-                Text(recipe.carbos!,
+                Text(recipe.carbos ?? "",
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold))
               ]),
@@ -197,7 +232,7 @@ class RecipeDetail extends StatelessWidget {
                   "Fats: ",
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
-                Text(recipe.fats!,
+                Text(recipe.fats ?? "",
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold))
               ]),
@@ -208,7 +243,7 @@ class RecipeDetail extends StatelessWidget {
                   "Proteins: ",
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
-                Text(recipe.proteins!,
+                Text(recipe.proteins ?? "",
                     style: const TextStyle(
                         fontSize: 14, fontWeight: FontWeight.bold))
               ]),
