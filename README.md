@@ -7,7 +7,7 @@ This is a Flutter project that showcases a simple Recipe App. The app fetches re
 - Fetch and display a list of recipes
 - Display detailed information about a recipe
 - Handle loading and error states
-- Refresh the list of recipes
+- Pull to refresh
 
 ## Getting Started
 
@@ -43,6 +43,29 @@ Once you have Flutter and Dart installed, you can follow these steps to run the 
 This will start the app in a new window.
 
 Please note that you need to have an emulator running, or a device connected, to run the app.
+
+## Showcases
+
+<table>
+  <tr>
+    <td width="50%">
+      <figure width="100%">
+        <figcaption style="text-align: center;">Portrait</figcaption>
+          <video src="https://github.com/user-attachments/assets/ce5698d2-16f0-42a5-8e9b-eca7582e4240" width="100%" height="240" controls>
+          Your browser does not support the video tag.
+        </video>
+      </figure>
+    </td>
+    <td width="50%">
+      <figure>
+        <figcaption style="text-align: center;">Landscape Mode</figcaption>
+        <video src="https://github.com/user-attachments/assets/0cabd057-615a-43e5-bfdd-0d0e6f054202" width="100%" height="240" controls>
+          Your browser does not support the video tag.
+        </video>
+      </figure>
+    </td>
+  </tr>
+</table>
 
 ## Testing Strategies
 
