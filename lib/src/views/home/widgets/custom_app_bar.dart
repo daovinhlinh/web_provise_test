@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-PreferredSizeWidget customAppBar() {
+PreferredSizeWidget customAppBar({required String title}) {
   return AppBar(
-    title: const Text('Recipes'),
+    centerTitle: true,
+    title: Text(
+      title,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ),
   );
 }
