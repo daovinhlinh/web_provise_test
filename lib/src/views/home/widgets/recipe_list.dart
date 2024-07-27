@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:web_provise_test/src/apis/recipe/recipe_api_impl.dart';
 import 'package:web_provise_test/src/models/recipe.dart';
+import 'package:web_provise_test/src/utils/extensions.dart';
 import 'package:web_provise_test/src/views/home/widgets/recipe_card.dart';
 import 'package:web_provise_test/src/views/home/widgets/recipe_detail.dart';
 
@@ -30,7 +31,7 @@ class _RecipeListState extends State<RecipeList> {
       });
 
       // sleep for 1 seconds to simulate a network request
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 3));
 
       // throw error to test error handling
       // throw Exception('An error occurred while loading the data');
@@ -105,31 +106,27 @@ class _RecipeListState extends State<RecipeList> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisExtent: orientation == Orientation.portrait
-                    ? MediaQuery.of(context).size.width * 0.35
-                    : MediaQuery.of(context).size.height * 0.75,
+                    ? context.screenSize.width * 0.35
+                    : context.screenSize.height * 0.75,
                 crossAxisCount: orientation == Orientation.portrait ? 1 : 3,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16),
             itemCount: recipes.length,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.only(
+              left: orientation == Orientation.landscape
+                  ? MediaQuery.of(context).padding.left
+                  : 16,
+              right: orientation == Orientation.landscape
+                  ? MediaQuery.of(context).padding.right
+                  : 16,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  showModalBottomSheet(
-                      isScrollControlled: true,
-                      useSafeArea: true,
-                      constraints:
-                          const BoxConstraints(maxWidth: double.infinity),
-                      context: context,
-                      enableDrag: true,
-                      clipBehavior: Clip.hardEdge,
-                      builder: (context) {
-                        return Container(
-                          color: Colors.white,
-                          height: MediaQuery.of(context).size.height,
-                          child: RecipeDetail(recipe: recipes[index]),
-                        );
-                      });
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RecipeDetail(recipe: recipes[index]);
+                  }));
                 },
                 child: RecipeCard(
                   recipe: recipes[index],
@@ -145,7 +142,15 @@ class _RecipeListState extends State<RecipeList> {
   Widget _buildLoadingList() {
     return OrientationBuilder(builder: (context, orientation) {
       return GridView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.only(
+          left: orientation == Orientation.landscape
+              ? MediaQuery.of(context).padding.left
+              : 16,
+          right: orientation == Orientation.landscape
+              ? MediaQuery.of(context).padding.right
+              : 16,
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
         itemCount: 5,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: orientation == Orientation.landscape
@@ -154,8 +159,8 @@ class _RecipeListState extends State<RecipeList> {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           mainAxisExtent: orientation == Orientation.portrait
-              ? MediaQuery.of(context).size.width * 0.35
-              : MediaQuery.of(context).size.height * 0.75,
+              ? context.screenSize.width * 0.35
+              : context.screenSize.height * 0.75,
         ),
         itemBuilder: (context, index) {
           return orientation == Orientation.landscape
@@ -176,7 +181,7 @@ class _RecipeListState extends State<RecipeList> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: context.screenSize.height * 0.4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               color: Colors.white,
@@ -239,8 +244,8 @@ class _RecipeListState extends State<RecipeList> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  height: MediaQuery.of(context).size.width * 0.35,
+                  width: context.screenSize.width * 0.35,
+                  height: context.screenSize.width * 0.35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
                     color: Colors.white,

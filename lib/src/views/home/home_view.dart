@@ -8,7 +8,9 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppBar(title: "Recipe"),
-        body: const SafeArea(child: RecipeList()));
+      backgroundColor: Colors.white,
+      appBar: customAppBar(title: "Recipe"),
+      body: const RecipeList(),
+    );
   }
 }

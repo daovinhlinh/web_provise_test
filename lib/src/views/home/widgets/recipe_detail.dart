@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:web_provise_test/assets.dart';
 import 'package:web_provise_test/src/models/recipe.dart';
+import 'package:web_provise_test/src/utils/extensions.dart';
+import 'package:web_provise_test/src/views/home/widgets/custom_app_bar.dart';
 import 'package:web_provise_test/src/widgets/network_image_with_fallback.dart';
 
 class RecipeDetail extends StatelessWidget {
@@ -13,106 +15,109 @@ class RecipeDetail extends StatelessWidget {
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    return Stack(
-      children: [
-        isLandscape
+    return Scaffold(
+        backgroundColor: Colors.white,
+        extendBodyBehindAppBar: true,
+        appBar: customAppBar(
+          surfaceTintColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                stops: [0, 1],
+                begin: Alignment.topRight,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.black,
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          ),
+          leading: const BackButton(
+            color: Colors.white,
+          ),
+        ),
+        body: isLandscape
             ? _buildLandscapeView(context)
-            : _buildPortraitView(context),
-        Positioned(
-          top: 20,
-          left: 20,
-          child: GestureDetector(
-            onTap: Navigator.of(context).pop,
-            child: Container(
-                padding: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                child: const Icon(Icons.arrow_back,
-                    color: Colors.black, size: 24)),
+            : _buildPortraitView(context));
+  }
+
+  Widget _buildLandscapeView(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          NetworkImageWithFallback(
+            imageUrl: recipe.image,
+            fallbackAsset: Asset.imgRecipePlaceholder,
+            width: double.infinity,
+            height: context.screenSize.height * 0.6,
           ),
-        ),
-      ],
+          Padding(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).padding.left,
+                right: MediaQuery.of(context).padding.right,
+                bottom: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 16,
+                ),
+                _buildHeader(),
+                const SizedBox(
+                  height: 10,
+                ),
+                _buildDiffAndTime(),
+                _buildRecipeNutrition(),
+                const SizedBox(
+                  height: 16,
+                ),
+                _buildDescription(),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
-  Row _buildLandscapeView(BuildContext context) {
-    return Row(
-      children: [
-        NetworkImageWithFallback(
-          imageUrl: recipe.image,
-          fallbackAsset: Asset.imgRecipePlaceholder,
-          width: MediaQuery.of(context).size.width * 0.4,
-          height: double.infinity,
-          // width: double.infinity,
-        ),
-        Expanded(
-          child: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildHeader(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _buildDiffAndTime(),
-                  _buildRecipeNutrition(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildDescription(),
-                ],
-              ),
+  Widget _buildPortraitView(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // _buildRecipeThumb(context),
+          NetworkImageWithFallback(
+            imageUrl: recipe.image,
+            fallbackAsset: Asset.imgRecipePlaceholder,
+            height: context.screenSize.height * 0.45,
+            width: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: 16,
+                ),
+                _buildHeader(),
+                const SizedBox(
+                  height: 16,
+                ),
+                _buildDiffAndTime(),
+                _buildRecipeNutrition(),
+                const SizedBox(
+                  height: 16,
+                ),
+                _buildDescription(),
+              ],
             ),
           ),
-        )
-      ],
-    );
-  }
-
-  Column _buildPortraitView(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // _buildRecipeThumb(context),
-        NetworkImageWithFallback(
-          imageUrl: recipe.image,
-          fallbackAsset: Asset.imgRecipePlaceholder,
-          height: MediaQuery.of(context).size.height * 0.4,
-          width: double.infinity,
-        ),
-        Expanded(
-          child: SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildHeader(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildDiffAndTime(),
-                  _buildRecipeNutrition(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  _buildDescription(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_provise_test/assets.dart';
 import 'package:web_provise_test/src/models/recipe.dart';
+import 'package:web_provise_test/src/utils/extensions.dart';
 import 'package:web_provise_test/src/widgets/network_image_with_fallback.dart';
 
 class RecipeCard extends StatelessWidget {
@@ -22,7 +23,7 @@ class RecipeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withOpacity(0.3),
             spreadRadius: 3,
             blurRadius: 10,
             offset: const Offset(0, 0), // changes position of shadow
@@ -180,7 +181,7 @@ class RecipeCard extends StatelessWidget {
   }
 
   Widget _buildThumbImage(BuildContext context, bool isLandscape) {
-    final width = MediaQuery.of(context).size.width;
+    final width = context.screenSize.width;
 
     return NetworkImageWithFallback(
       imageUrl: recipe.thumb,
