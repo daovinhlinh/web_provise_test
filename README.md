@@ -51,7 +51,7 @@ Please note that you need to have an emulator running, or a device connected, to
     <td width="50%">
       <figure width="100%">
         <figcaption style="text-align: center;">Portrait</figcaption>
-          <video src="https://github.com/user-attachments/assets/ce5698d2-16f0-42a5-8e9b-eca7582e4240" width="100%" height="240" controls>
+          <video src="https://github.com/user-attachments/assets/60e18bfa-1123-497e-8cef-5a108cee2e3a" width="100%" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
@@ -59,7 +59,7 @@ Please note that you need to have an emulator running, or a device connected, to
     <td width="50%">
       <figure>
         <figcaption style="text-align: center;">Landscape Mode</figcaption>
-        <video src="https://github.com/user-attachments/assets/0cabd057-615a-43e5-bfdd-0d0e6f054202" width="100%" height="240" controls>
+        <video src="https://github.com/user-attachments/assets/baf1a2e3-8dde-4dcb-a5cc-335b70132ef3" width="100%" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
@@ -69,14 +69,14 @@ Please note that you need to have an emulator running, or a device connected, to
 
 ## Testing Strategies
 
-We have implemented four main test cases to ensure the functionality and robustness of the app: loading, load success, load error, and refreshing. These tests are demonstrated and explained in the following videos:
+I have implemented four main test cases to ensure the functionality and robustness of the app: loading, load success, load error, and refreshing. These tests are demonstrated and explained in the following videos:
 
 <table>
   <tr>
     <td>
       <figure>
         <figcaption style="text-align: center;">Loading State</figcaption>
-        <video src="https://github.com/user-attachments/assets/6569d056-7265-41c7-8fc9-061eef4818c7" width="320" height="240" controls>
+        <video src="https://github.com/user-attachments/assets/e0438833-03cf-4950-8193-ef8960cccc01" width="320" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
@@ -84,7 +84,7 @@ We have implemented four main test cases to ensure the functionality and robustn
     <td>
       <figure>
         <figcaption style="text-align: center;">Load Success State</figcaption>
-        <video src="https://github.com/user-attachments/assets/bf7501f5-0ed4-46bc-956d-0eaca90d19f5" width="320" height="240" controls>
+        <video src="https://github.com/user-attachments/assets/9863cddc-8301-4af8-a528-d76e30db2343" width="320" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
@@ -94,7 +94,7 @@ We have implemented four main test cases to ensure the functionality and robustn
     <td>
       <figure>
         <figcaption style="text-align: center;">Load Error State</figcaption>
-        <video src="https://github.com/user-attachments/assets/eb20eb2f-0dea-4399-8e23-9191763ff0a2" width="320" height="240" controls>
+        <video src="https://github.com/user-attachments/assets/816bbd1d-22a7-43b9-8978-54c3f6438f8a" width="320" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
@@ -102,17 +102,7 @@ We have implemented four main test cases to ensure the functionality and robustn
     <td>
       <figure>
         <figcaption style="text-align: center;">Refreshing</figcaption>
-        <video src="https://github.com/user-attachments/assets/5c21a356-c941-4ef9-a687-814459d7dafd" width="320" height="240" controls>
-          Your browser does not support the video tag.
-        </video>
-      </figure>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <figure>
-        <figcaption style="text-align: center;">Show Recipe Detail</figcaption>
-        <video src="https://github.com/user-attachments/assets/0803ce65-516c-40c4-8a05-2be9886d5671" width="320" height="240" controls>
+        <video src="https://github.com/user-attachments/assets/db1bfbb4-21df-4796-8092-2a1ce16a1fb6" width="320" height="240" controls>
           Your browser does not support the video tag.
         </video>
       </figure>
