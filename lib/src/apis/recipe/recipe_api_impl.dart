@@ -11,7 +11,7 @@ Future<T> loadJson<T>(String uri) async {
   return jsonDecode(jsonString);
 }
 
-class RecipeApiImpl extends RecipeApi {
+class RecipeApiImpl implements RecipeApi {
   @override
   Future<List<dynamic>> getRecipes() async {
     return loadJson(Asset.jsonRecipes);
